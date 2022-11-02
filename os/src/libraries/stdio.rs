@@ -1,4 +1,5 @@
 use crate::kernel::interrupts::keyboard::{newKey, lastKey};
+use alloc::string::String;
 
 #[macro_export]
 macro_rules! print {
@@ -17,4 +18,16 @@ pub fn getchar() -> char {
         newKey = false;
         lastKey
     }
+}
+
+// Returns a new line character.
+pub fn readline() -> String {
+    let mut lastChar: char = '\0';
+    let mut result: String = String::new();
+    while lastChar != '\n' {
+        lastChar = getchar();
+        result.push(lastChar);
+    }
+
+    result
 }
