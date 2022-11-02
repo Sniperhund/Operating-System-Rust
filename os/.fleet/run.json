@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "cargo",
+            "name": "Run",
+            "cargoArgs": ["run"],
+        },
+        {
+            "type": "cargo",
+            "name": "Verify",
+            "cargoArgs": ["check"],
+        },
+        {
+            "type": "cargo",
+            "name": "Build",
+            "cargoArgs": ["build"],
+        }
+    ]
+}
