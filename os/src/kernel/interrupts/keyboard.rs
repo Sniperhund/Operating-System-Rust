@@ -23,7 +23,7 @@ pub extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: Interrupt
                 DecodedKey::Unicode(character) => {
                     unsafe { lastKey = character; newKey = true; }
                 },
-                DecodedKey::RawKey(key) => print!("{:?}", key),
+                DecodedKey::RawKey(key) => {},
             }
         }
     }

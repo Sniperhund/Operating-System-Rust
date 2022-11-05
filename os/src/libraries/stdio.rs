@@ -1,4 +1,4 @@
-use crate::kernel::interrupts::keyboard::{newKey, lastKey};
+use crate::kernel::{interrupts::keyboard::{newKey, lastKey}, stdout::_removeChar};
 use alloc::string::String;
 
 #[macro_export]
@@ -20,13 +20,22 @@ pub fn getchar() -> char {
     }
 }
 
-// Returns a new line character.
+/// This function doesn't remove new line characters
 pub fn readline() -> String {
     let mut lastChar: char = '\0';
     let mut result: String = String::new();
     while lastChar != '\n' {
         lastChar = getchar();
-        result.push(lastChar);
+        if lastChar as u8 == 0x08 { // 0x08 is backspace
+            result.pop();
+
+            _removeChar();
+        } else {
+            result.push(lastChar);
+
+            // Remove this when done with the shell
+            print!("{}", lastChar);
+        }
     }
 
     result

@@ -75,6 +75,13 @@ impl Writer {
         }
     }
 
+    pub fn remove_char(&mut self) {
+        if self.column_position == 0 { return; }
+        self.column_position -= 1;
+        self.write_byte(b' ');
+        self.column_position -= 1;
+    }
+
     pub fn write_string(&mut self, s: &str) {
         for byte in s.bytes() {
             match byte {
@@ -136,5 +143,13 @@ pub fn _print(args: fmt::Arguments) {
 
     interrupts::without_interrupts(|| {
         WRITER.lock().write_fmt(args).unwrap();
+    });
+}
+
+pub fn _removeChar() {
+    use x86_64::instructions::interrupts;
+
+    interrupts::without_interrupts(|| {
+        WRITER.lock().remove_char();
     });
 }
